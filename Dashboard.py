@@ -34,14 +34,14 @@ if 'history' in st.session_state and st.session_state['history']:
     col1, col2 = st.columns(2)
     col1.markdown(f"""
         <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>Total Tests</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #07901D">{total_tests}</p>
+            <h4 style="margin-bottom: 0;">Total Tests</h4>
+            <p style="font-size: 35px; font-weight: bold; color: #07901D; margin-top: 0;">{total_tests}</p>
         </div>
     """, unsafe_allow_html=True)
     col2.markdown(f"""
         <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
             <h4>Highest Test Result</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #07901D">{highest_result}</p>
+            <p style="font-size: 35px; font-weight: bold; color: #07901D;">{highest_result}</p>
         </div>
     """, unsafe_allow_html=True)
     st.write("")
