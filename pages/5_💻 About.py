@@ -51,20 +51,46 @@ def about_page():
     elif section == "Features Considered":
         st.header("Features Considered")
         st.write("""
-            The system takes into account the following features to make its predictions:
-            - **Age:** The age of the patient.
-            - **Gender:** The gender of the patient.
-            - **Chest Pain Type:** The type of chest pain experienced (e.g., Typical Angina, Atypical Angina, etc.).
-            - **Resting Blood Pressure:** The patient's blood pressure when at rest.
-            - **Serum Cholesterol:** The cholesterol level in the blood.
-            - **Fasting Blood Sugar:** Blood sugar levels measured after fasting.
-            - **Resting Electrocardiogram Result:** The result of the patient's resting ECG.
-            - **Maximum Heart Rate:** The maximum heart rate achieved during exercise.
-            - **Number of Major Vessels Affected:** The number of major blood vessels affected by narrowing.
-            - **Thalassemia Type:** The type of thalassemia (Normal, Defect, Reversible Defect).
-            - **Exercise Angina:** Whether exercise induces angina.
-            - **Oldpeak:** The ST depression induced by exercise relative to rest.
-            - **ST Slope:** The slope of the peak exercise ST segment.
+        The system takes into account the following features to make its predictions:
+
+        - **Age:** The age of the patient. Age is a critical factor as the risk of cardiac conditions generally increases with age.
+         ****         
+        - **Gender:** The gender of the patient. Men generally have a higher risk of heart disease at a younger age, while the risk for women increases post-menopause.
+         ****   
+        - **Chest Pain Type:** 
+            - **Typical Angina:** Pain typically associated with exertion and relieved by rest or nitroglycerin.
+            - **Atypical Angina:** Pain that doesn't fit the typical pattern but is still related to the heart.
+            - **Non-Anginal Pain:** Chest pain not related to the heart.
+            - **Asymptomatic:** No chest pain.
+        ****
+        - **Resting Blood Pressure:** The patient's blood pressure when at rest, measured in mm Hg. Elevated resting blood pressure (hypertension) is a significant risk factor for heart disease.
+        ****
+        - **Serum Cholesterol:** The cholesterol level in the blood, measured in mg/dl. High cholesterol levels can lead to atherosclerosis.
+        ****
+        - **Fasting Blood Sugar:** Blood sugar levels measured after fasting for at least 8 hours. Levels above 120 mg/dl can indicate diabetes, which is a risk factor for heart disease.
+        ****
+        - **Resting Electrocardiogram Result (ECG):** 
+            - **Normal:** No significant abnormalities detected.
+            - **ST-T Wave Abnormality:** Indicates issues like ischemia or myocardial infarction.
+            - **Left Ventricular Hypertrophy:** Thickening of the heart's left ventricular wall, often due to high blood pressure.
+        ****    
+        - **Maximum Heart Rate:** The highest heart rate achieved by the patient during exercise, measured in bpm. Lower maximum heart rates during stress tests can indicate poor cardiovascular fitness or underlying heart issues.
+        ****
+        - **Number of Major Vessels Affected:** The number of major coronary arteries (out of 0, 1, 2, or 3) that have significant narrowing or blockages. The greater the number, the higher the risk of heart disease.
+        ****
+        - **Thalassemia Type:** 
+            - **Normal:** No thalassemia.
+            - **Defect:** Presence of abnormal hemoglobin, causing mild to severe anemia.
+            - **Reversible Defect:** Temporary abnormality in hemoglobin.
+        ****
+        - **Exercise Angina:** Whether exercise induces angina. Positive exercise angina suggests significant coronary artery disease.
+        ****
+        - **Oldpeak:** The ST depression induced by exercise relative to rest, measured in mm. It indicates the severity of ischemia.
+        ****
+        - **ST Slope:** 
+            - **Upsloping:** Generally less concerning, though still needs attention.
+            - **Flat:** Can indicate ischemia or a higher risk of heart disease.
+            - **Downsloping:** Strongly associated with coronary artery disease.
         """)
         
     elif section == "Future Enhancements":
