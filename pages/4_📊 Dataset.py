@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # Load the CSV file
 @st.cache_data
 def load_data():
-    df = pd.read_csv(r"C:\Users\Afifi Faiz\Documents\Cardialyze-app\OHCA.csv")
+    df = pd.read_csv(r"OHCA.csv")
     return df
 
 # Define the interface and functions
