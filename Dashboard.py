@@ -49,7 +49,7 @@ if 'history' in st.session_state and st.session_state['history']:
     """, unsafe_allow_html=True)
     col3.markdown(f"""
         <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>lowest Test</h4>
+            <h4>Lowest Test</h4>
             <p style="font-size: 35px; font-weight: bold; color: #07901D">{lowest_result}</p>
         </div>
     """, unsafe_allow_html=True)
