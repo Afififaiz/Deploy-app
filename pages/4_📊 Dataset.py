@@ -2,11 +2,13 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Load the CSV file
 @st.cache_data
 def load_data():
-    df = pd.read_csv(r"OHCA.csv")
+    df = pd.read_csv(r"C:\Users\Afifi Faiz\Documents\Cardialyze-app\OHCA.csv")
     return df
 
 # Define the interface and functions
@@ -25,7 +27,7 @@ def main():
     gender_map = {0: 'Male', 1: 'Female'}
     data['Gender'] = data['sex'].map(gender_map)
 
-     # Create a Sankey chart to visualize relationships between selected attributes
+    # Create a Sankey chart to visualize relationships between selected attributes
     st.write("### Features Distribution Between Gender")
 
     # Filter out 'Gender' from the list of columns
@@ -50,13 +52,11 @@ def main():
     )])
 
     st.plotly_chart(fig)
-    
+
     # Create scatter plots to visualize relationships between numerical features
     st.write("### Serum Cholestrol Between Gender")
     scatter_fig = px.scatter(data, x='age', y='chol', color='Gender', hover_data=['Gender'], labels={'age': 'Age', 'chol': 'Serum Cholesterol'})
     st.plotly_chart(scatter_fig)
-
-   
 
     st.write("### Cardiac Presence Between Gender and Age")
 
@@ -68,13 +68,28 @@ def main():
                        labels={'output': 'Cardiac Arrest', 'age': 'Age', 'Gender': 'Gender'})
     fig.update_layout(barmode='group')
     fig.update_xaxes(title_text='Age')
-   
-    
     st.plotly_chart(fig)
 
+    # New visualizations
 
+    # Histogram of Age Distribution
+    st.write("### Age Distribution")
+    hist_fig = px.histogram(data, x='age', nbins=30, title='Age Distribution', labels={'age': 'Age'})
+    st.plotly_chart(hist_fig)
 
-   
+    # Box Plot of Serum Cholesterol by Gender
+    st.write("### Serum Cholesterol by Gender")
+    box_fig = px.box(data, x='Gender', y='chol', title='Serum Cholesterol by Gender', labels={'chol': 'Serum Cholesterol'})
+    st.plotly_chart(box_fig)
+
+    # Correlation Heatmap
+    st.write("### Correlation Heatmap")
+    numeric_data = data.select_dtypes(include=['float64', 'int64'])  # Select only numeric columns
+    corr = numeric_data.corr()
+    plt.figure(figsize=(10, 8))
+    heatmap = sns.heatmap(corr, annot=True, cmap='coolwarm', center=0)
+    st.pyplot(plt)
+
 # Run the interface
 if __name__ == "__main__":
     main()
