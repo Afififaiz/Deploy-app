@@ -29,25 +29,31 @@ if 'history' in st.session_state and st.session_state['history']:
     # Calculate total tests and highest test result
     total_tests = len(history_df)
     highest_result = history_df['Result'].max()
+    lowest_result = history_df['Result'].min()
+   
 
     # Display metrics with a border box
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     col1.markdown(f"""
         <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
             <h4>Total Tests</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #07901D">{total_tests}</p>
+            <p style="font-size: 35px; font-weight: bold;">{total_tests}</p>
         </div>
     """, unsafe_allow_html=True)
     col2.markdown(f"""
         <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>Highest Test Result</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #07901D">{highest_result}</p>
+            <h4>Highest Test</h4>
+            <p style="font-size: 35px; font-weight: bold; color: #FA0D0A">{highest_result}</p>
+        </div>
+    """, unsafe_allow_html=True)
+    col3.markdown(f"""
+        <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
+            <h4>lowest Test</h4>
+            <p style="font-size: 35px; font-weight: bold; color: #07901D">{lowest_result}</p>
         </div>
     """, unsafe_allow_html=True)
     st.write("")
     st.write("")
-
-    st.write("### *History Chart*")
 
     # Plotly chart for history with markers
     fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True)
@@ -55,7 +61,26 @@ if 'history' in st.session_state and st.session_state['history']:
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("### *Detailed History*")
+     # Create another row for more visualizations
+    col4, col5, col6 = st.columns(3)
+    
+    # Additional visualization: Bar chart for Age vs Result
+    with col4:
+        fig2 = px.bar(history_df, x='Age', y='Result', title='Age vs Cardiac Arrest Risk', color='Result')
+        st.plotly_chart(fig2, use_container_width=True)
+
+
+    # Additional visualization: Histogram for Serum Cholesterol
+    with col5:
+        fig3 = px.histogram(history_df, x='Serum Cholesterol', title='Serum Cholesterol Distribution')
+        st.plotly_chart(fig3, use_container_width=True)
+        
+    # Additional visualization: Box plot for Max Heart Rate
+    with col6:
+        fig4 = px.box(history_df, y='Max Heart Rate', title='Max Heart Rate Distribution')
+        st.plotly_chart(fig4, use_container_width=True)
+
+
     st.dataframe(history_df)
 else:
     st.write("No history available.")
