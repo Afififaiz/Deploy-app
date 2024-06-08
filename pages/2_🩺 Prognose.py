@@ -1,13 +1,14 @@
 import streamlit as st
 import joblib
 import numpy as np
+import pandas as pd
 from datetime import datetime
 import pytz
 
 # Define the interface and functions
 def main():
     # Load the trained XGBoost model
-    xgb_model = joblib.load('xgb_model.pkl')
+    xgb_model = joblib.load('C:/Users/Afifi Faiz/Documents/Cardialyze-app/xgb_model.pkl')
 
     st.title("Cardiac Arrest Risk Prognosticator")
 
@@ -16,6 +17,8 @@ def main():
     # Initialize session state for input fields if not already done
     if 'inputs' not in st.session_state:
         st.session_state['inputs'] = {
+            'name': '',
+            'ic_number': '',
             'age': 29,
             'gender': 'Male',
             'chest_pain_type': 'Typical Angina',
@@ -31,8 +34,16 @@ def main():
             'st_slope': 'Upsloping'
         }
 
+    if 'current_result' not in st.session_state:
+        st.session_state['current_result'] = None
+
+    if 'history' not in st.session_state:
+        st.session_state['history'] = []
+
     def reset_inputs():
         st.session_state['inputs'] = {
+            'name': '',
+            'ic_number': '',
             'age': 29,
             'gender': 'Male',
             'chest_pain_type': 'Typical Angina',
@@ -47,6 +58,13 @@ def main():
             'oldpeak': -2.6,
             'st_slope': 'Upsloping'
         }
+        st.session_state['current_result'] = None
+
+    # Get user input for patient name
+    st.session_state['inputs']['name'] = st.text_input("Patient Name:", value=st.session_state['inputs']['name'])
+
+    # Get user input for IC number
+    st.session_state['inputs']['ic_number'] = st.text_input("Identification Number (with '-'):", value=st.session_state['inputs']['ic_number'])
 
     # Get user input for age
     st.session_state['inputs']['age'] = st.number_input("Age (years):", min_value=29, max_value=77, value=st.session_state['inputs']['age'])
@@ -89,7 +107,6 @@ def main():
     # Get user input for ST slope
     st.session_state['inputs']['st_slope'] = st.selectbox("ST Slope:", options=["Upsloping", "Flat", "Downsloping"], index=["Upsloping", "Flat", "Downsloping"].index(st.session_state['inputs']['st_slope']))
     
-      
     # Define a function for calculating the prediction
     def calculate_prediction():
         # Convert categorical inputs to numerical
@@ -110,10 +127,10 @@ def main():
         probability = xgb_model.predict_proba(input_data)[0][1]
         result_col.write(f"There is a {probability * 100:.2f}% chance of developing cardiac arrest.")
 
-        # Store result in session state
-        if 'history' not in st.session_state:
-            st.session_state['history'] = []
-        st.session_state['history'].append({
+        st.session_state['current_result'] = {
+            
+            "Name": st.session_state['inputs']['name'],
+            "IC Number": st.session_state['inputs']['ic_number'],
             "Age": st.session_state['inputs']['age'],
             "Gender": st.session_state['inputs']['gender'],
             "Chest Pain Type": st.session_state['inputs']['chest_pain_type'],
@@ -129,19 +146,35 @@ def main():
             "ST Slope": st.session_state['inputs']['st_slope'],
             "Result": f"{probability * 100:.2f}%",
             "Timestamp": datetime.now(pytz.timezone('Asia/Kuala_Lumpur')).strftime('%Y-%m-%d %H:%M:%S')
-        })    
+        }
+        st.session_state['history'].append(st.session_state['current_result'])
 
     # Define your button layout
     buttons_col1, button_col2, result_col = st.columns([1, 5, 4])
 
     # Add separate button for calculation
     if buttons_col1.button("Calculate"):
-        calculate_prediction()
+        if st.session_state['inputs']['name'] and st.session_state['inputs']['ic_number']:
+            calculate_prediction()
+        else:
+            st.warning("Please fill in both the Patient Name and Identification Number before calculating.")
 
     # Add reset button
     if button_col2.button("Reset All"):
         reset_inputs()
         st.experimental_rerun()
+
+    st.write("")
+    st.write("")
+    # Display current result
+    if st.session_state['current_result'] is not None:
+        result_df = pd.DataFrame([st.session_state['current_result']])
+        columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 
+                   'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
+                   'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
+        result_df = result_df[columns]
+        st.write("Current Test Result:")
+        st.dataframe(result_df)
 
 # Run the interface
 if __name__ == "__main__":
