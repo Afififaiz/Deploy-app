@@ -34,9 +34,10 @@ def main():
             'st_slope': 'Upsloping'
         }
 
+    #NEWEST CHANGE
     if 'current_result' not in st.session_state:
         st.session_state['current_result'] = None
-
+    #NEWEST CHANGE
     if 'history' not in st.session_state:
         st.session_state['history'] = []
 
