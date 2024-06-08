@@ -9,7 +9,7 @@ if 'history' in st.session_state and st.session_state['history']:
     history_df = pd.DataFrame(st.session_state['history'])
     
     # Rearrange columns to put timestamp first
-    columns = ['Timestamp', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 'Serum Cholesterol', 
+    columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 'Serum Cholesterol', 
                'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
                'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
     history_df = history_df[columns]
