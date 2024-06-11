@@ -58,11 +58,11 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_highest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=highest_result,
-            title={'text': "Highest Test Result (%)", 'font': {'size': 24, 'color': 'red'}},
+            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525}},
             number={'font': {'color': 'red'}},
             gauge={
                 'axis': {'range': [None, 100]},
-                'bar': {'color': 'red'}
+                'bar': {'color': '#BB2525'}
             }
         ))
         fig_highest_result.update_layout(gauge_layout)
@@ -72,7 +72,7 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_lowest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=lowest_result,
-            title={'text': "Lowest Test Result (%)", 'font': {'size': 24, 'color': 'green'}},
+            title={'text': "<b>Lowest Test Result (%)</b>", 'font': {'size': 24, 'color': 'green'}},
             number={'font': {'color': 'green'}},
             gauge={
                 'axis': {'range': [0, 100]},
