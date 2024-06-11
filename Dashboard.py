@@ -46,7 +46,7 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_total_tests = go.Figure(go.Indicator(
             mode="gauge+number",
             value=total_tests,
-            title={'text': "Total Tests", 'font': {'size': 24, 'color': 'purple'}},
+            title={'text': "<b>Total Tests</b>", 'font': {'size': 24, 'color': 'purple'}},
             number={'font': {'color': 'purple'}},
             gauge={'axis': {'range': [None, total_tests * 1.2]},
                    'bar': {'color': 'purple'}}
