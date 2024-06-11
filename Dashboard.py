@@ -83,7 +83,7 @@ if 'history' in st.session_state and st.session_state['history']:
         st.plotly_chart(fig_lowest_result, use_container_width=True)
 
     # Plotly chart for history with markers
-    fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True, color_discrete_sequence=px.colors.qualitative.Plotly)
+    fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True, color_discrete_sequence=px.colors.qualitative.Plotly, orientation='h')
     fig.update_traces(marker=dict(size=10), line=dict(width=2))
 
     st.plotly_chart(fig, use_container_width=True)
