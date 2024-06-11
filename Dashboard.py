@@ -33,28 +33,55 @@ if 'history' in st.session_state and st.session_state['history']:
     highest_result = history_df['Result'].max()
     lowest_result = history_df['Result'].min()
 
-    # Display metrics with a border box
+    # Display metrics using gauge meters
     col1, col2, col3 = st.columns(3)
-    col1.markdown(f"""
-        <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>Total Tests</h4>
-            <p style="font-size: 35px; font-weight: bold;">{total_tests}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    col2.markdown(f"""
-        <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>Highest Test</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #FA0D0A">{highest_result}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    col3.markdown(f"""
-        <div style="border:5px solid #d3d3d3; padding: 10px; border-radius: 10px; text-align: center;">
-            <h4>Lowest Test</h4>
-            <p style="font-size: 35px; font-weight: bold; color: #07901D">{lowest_result}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    st.write("")
-    st.write("")
+    
+    gauge_layout = {
+        'margin': {'t': 50, 'b': 0, 'l': 0, 'r': 0},
+        'height': 250,  # Adjust height if needed
+        'paper_bgcolor': '#87AECF',
+        'plot_bgcolor': '#87AECF',
+        'font': {'color': 'black'}
+    }
+    
+    with col1:
+        fig_total_tests = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=total_tests,
+            title={'text': "<b>Total Tests</b>", 'font': {'size': 24, 'color': 'purple'}},
+            number={'font': {'color': 'purple'}},
+            gauge={'axis': {'range': [None, total_tests * 1.2]},
+                   'bar': {'color': 'purple'}}
+        ))
+        fig_total_tests.update_layout(gauge_layout)
+        st.plotly_chart(fig_total_tests, use_container_width=True)
+    
+    with col2:
+        fig_highest_result = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=highest_result,
+            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525'}},
+            number={'font': {'color': '#BB2525'}},
+            gauge={
+                'axis': {'range': [None, 100]},
+                'bar': {'color': '#BB2525'}
+            }
+        ))
+        fig_highest_result.update_layout(gauge_layout)
+        st.plotly_chart(fig_highest_result, use_container_width=True)
+    
+    with col3:
+        fig_lowest_result = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=lowest_result,
+            title={'text': "<b>Lowest Test Result (%)</b>", 'font': {'size': 24, 'color': 'green'}},
+            number={'font': {'color': 'green'}},
+            gauge={
+                'axis': {'range': [0, 100]},
+                'bar': {'color': 'green'}}
+        ))
+        fig_lowest_result.update_layout(gauge_layout)
+        st.plotly_chart(fig_lowest_result, use_container_width=True)
 
     # Plotly chart for history with markers
     fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True, color_discrete_sequence=px.colors.qualitative.Plotly)
