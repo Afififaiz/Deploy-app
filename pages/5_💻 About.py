@@ -110,7 +110,7 @@ def about_page():
     elif section == "Contact Us":
         st.header("Contact Us")
         st.write("For more information or any inquiries, please contact us at:")
-        st.image(r"C:\Users\Afifi Faiz\Downloads\Cardialyze-deploy\pic.jpg", width=500)
+        st.image(r"pic.jpg", width=500)
         st.write("""
         - **Developer:** AFIFI FAIZ
         - **Email:** [afififaiz01@gmail.com](mailto:afififaiz01@gmail.com)
