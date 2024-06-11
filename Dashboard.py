@@ -58,8 +58,8 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_highest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=highest_result,
-            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525}},
-            number={'font': {'color': 'red'}},
+            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525'}},
+            number={'font': {'color': '#BB2525'}},
             gauge={
                 'axis': {'range': [None, 100]},
                 'bar': {'color': '#BB2525'}
