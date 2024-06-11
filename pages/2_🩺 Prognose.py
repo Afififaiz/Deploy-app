@@ -171,11 +171,13 @@ def main():
     if st.session_state['current_result'] is not None:
         result_df = pd.DataFrame([st.session_state['current_result']])
         columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 
-                   'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
-                   'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
+                'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
+                'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
         result_df = result_df[columns]
+        result_df.index = [''] * len(result_df)  # Remove the index
         st.write("Current Test Result:")
         st.dataframe(result_df)
+
 
 # Run the interface
 if __name__ == "__main__":
