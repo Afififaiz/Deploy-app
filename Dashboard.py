@@ -57,8 +57,8 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_highest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=highest_result,
-            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': 'red'}},
-            number={'font': {'color': 'red'}},
+            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525'}},
+            number={'font': {'color': '#BB2525'}},
             gauge={
                 'axis': {'range': [None, 100]},
                 'bar': {'color': '#BB2525'}
@@ -79,6 +79,7 @@ if 'history' in st.session_state and st.session_state['history']:
         ))
         fig_lowest_result.update_layout(gauge_layout)
         st.plotly_chart(fig_lowest_result, use_container_width=True)
+
 
     # Plotly chart for history with markers
     fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True, color_discrete_sequence=px.colors.qualitative.Plotly)
