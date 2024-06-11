@@ -19,7 +19,10 @@ def about_page():
             evaluating the risk of cardiac arrest based on various health parameters. By inputting specific patient 
             information, the system provides a probabilistic prediction of cardiac arrest risk, helping in early 
             diagnosis and prevention.
+                 
+                
         """)
+        st.video("https://www.youtube.com/watch?v=VhOBLRyiXx0&ab_channel=ClevelandClinic")
         
     elif section == "Why Use This System?":
         st.header("Why Use This System?")
@@ -29,6 +32,7 @@ def about_page():
             arrest. Our system leverages advanced machine learning techniques to offer accurate predictions, 
             aiding healthcare providers in making informed decisions about patient care.
         """)
+        st.video("https://www.youtube.com/watch?v=VidtcN_tPn0&t=335s&ab_channel=Forbes")
         
     elif section == "Prediction Model":
         st.header("Prediction Model")
@@ -37,6 +41,7 @@ def about_page():
             of gradient boosting. XGBoost is well-known for its performance and accuracy in various machine learning 
             tasks. Our model has been trained and tested rigorously to ensure reliable predictions.
         """)
+        st.video("https://www.youtube.com/watch?v=rtJ2e02FbtY&t=392s&ab_channel=SamuelSeymour")
         
     elif section == "Model Accuracy":
         st.header("Model Accuracy")
@@ -92,6 +97,7 @@ def about_page():
             - **Flat:** Can indicate ischemia or a higher risk of heart disease.
             - **Downsloping:** Strongly associated with coronary artery disease.
         """)
+        st.video("https://www.youtube.com/watch?v=9emAmwJ3vFw&ab_channel=Cedars-Sinai")
         
     elif section == "Future Enhancements":
         st.header("Future Enhancements")
@@ -103,12 +109,14 @@ def about_page():
         
     elif section == "Contact Us":
         st.header("Contact Us")
+        st.write("For more information or any inquiries, please contact us at:")
+        st.image(r"C:\Users\Afifi Faiz\Downloads\Cardialyze-deploy\pic.jpg", width=500)
         st.write("""
-            For more information or any inquiries, please contact us at:
-            - **Developer:** AFIFI FAIZ
-            - **Email:** afififaiz01@gmail.com
-            - **Phone:** +6017 817 5248 
-        """)
+        - **Developer:** AFIFI FAIZ
+        - **Email:** [afififaiz01@gmail.com](mailto:afififaiz01@gmail.com)
+        - **Phone:** +6017 817 5248
+        """, unsafe_allow_html=True)
+    
 
 # Run the interface
 if __name__ == "__main__":
