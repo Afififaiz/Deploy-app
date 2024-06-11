@@ -12,11 +12,7 @@ st.set_page_config(
 st.title("Welcome to Cardialyze 👨‍⚕️")
 st.sidebar.success("Select a page above")
 
-st.write("## *Overview*")
-
 st.write("Cardialyze is your personal assistant to help prognose the risk of cardiac arrest based on user inputs.")
-st.write("")
-st.write("")
 
 if 'history' in st.session_state and st.session_state['history']:
     # Create a DataFrame from the history
@@ -28,24 +24,29 @@ if 'history' in st.session_state and st.session_state['history']:
                'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
     history_df = history_df[columns]
 
-    # Calculate total tests and highest test result
+    # Remove '%' sign from 'Result' column and convert to float
+    history_df['Result'] = history_df['Result'].str.replace('%', '').astype(float)
+
+    # Calculate total tests, highest test result, and lowest test result
     total_tests = len(history_df)
     highest_result = history_df['Result'].max()
     lowest_result = history_df['Result'].min()
+
+    st.write("")
 
     # Display metrics using gauge meters
     col1, col2, col3 = st.columns(3)
     
     gauge_layout = {
         'margin': {'t': 50, 'b': 0, 'l': 0, 'r': 0},
-        'height': 250,  # Adjust height if needed
+        'height': 250  # Adjust height if needed
     }
     
     with col1:
         fig_total_tests = go.Figure(go.Indicator(
             mode="gauge+number",
             value=total_tests,
-            title={'text': "<b>Total Tests</b>", 'font': {'size': 24, 'color': 'purple'}},
+            title={'text': "Total Tests", 'font': {'size': 24, 'color': 'purple'}},
             number={'font': {'color': 'purple'}},
             gauge={'axis': {'range': [None, total_tests * 1.2]},
                    'bar': {'color': 'purple'}}
@@ -57,11 +58,11 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_highest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=highest_result,
-            title={'text': "<b>Highest Test Result (%)</b>", 'font': {'size': 24, 'color': '#BB2525'}},
-            number={'font': {'color': '#BB2525'}},
+            title={'text': "Highest Test Result (%)", 'font': {'size': 24, 'color': 'red'}},
+            number={'font': {'color': 'red'}},
             gauge={
                 'axis': {'range': [None, 100]},
-                'bar': {'color': '#BB2525'}
+                'bar': {'color': 'red'}
             }
         ))
         fig_highest_result.update_layout(gauge_layout)
@@ -71,15 +72,15 @@ if 'history' in st.session_state and st.session_state['history']:
         fig_lowest_result = go.Figure(go.Indicator(
             mode="gauge+number",
             value=lowest_result,
-            title={'text': "<b>Lowest Test Result (%)</b>", 'font': {'size': 24, 'color': 'green'}},
+            title={'text': "Lowest Test Result (%)", 'font': {'size': 24, 'color': 'green'}},
             number={'font': {'color': 'green'}},
             gauge={
                 'axis': {'range': [0, 100]},
-                'bar': {'color': 'green'}}
+                'bar': {'color': 'green'}
+            }
         ))
         fig_lowest_result.update_layout(gauge_layout)
         st.plotly_chart(fig_lowest_result, use_container_width=True)
-
 
     # Plotly chart for history with markers
     fig = px.line(history_df, x='Timestamp', y='Result', title='Cardiac Arrest Test History', markers=True, color_discrete_sequence=px.colors.qualitative.Plotly)
