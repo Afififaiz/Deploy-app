@@ -39,9 +39,6 @@ if 'history' in st.session_state and st.session_state['history']:
     gauge_layout = {
         'margin': {'t': 50, 'b': 0, 'l': 0, 'r': 0},
         'height': 250,  # Adjust height if needed
-        'paper_bgcolor': '#87AECF',
-        'plot_bgcolor': '#87AECF',
-        'font': {'color': 'black'}
     }
     
     with col1:
