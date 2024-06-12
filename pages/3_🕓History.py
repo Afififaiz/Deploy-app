@@ -93,12 +93,22 @@ if 'history' in st.session_state and st.session_state['history']:
         selected_st_slope = st.multiselect('Select ST Slope', unique_st_slope, default=unique_st_slope)
         filtered_df = filtered_df[filtered_df['ST Slope'].isin(selected_st_slope)]
     elif filter_type == 'Result':
-        min_result, max_result = float(filtered_df['Result'].min()), float(filtered_df['Result'].max())
-        if min_result == max_result:
-            st.warning("Only one unique result value found. Please add more data to use this filter.")
+        # Create a temporary column for calculation purposes
+        filtered_df['Result_temp'] = filtered_df['Result'].str.rstrip('%').astype(float)
+        
+        if filtered_df.empty:
+            st.warning("No data available after filtering.")
         else:
-            selected_result_range = st.slider('Select Result Range', min_result, max_result, (min_result, max_result))
-            filtered_df = filtered_df[(filtered_df['Result'] >= selected_result_range[0]) & (filtered_df['Result'] <= selected_result_range[1])]
+            min_result, max_result = float(filtered_df['Result_temp'].min()), float(filtered_df['Result_temp'].max())
+            if min_result == max_result:
+                st.warning("Only one unique result value found. Please add more data to use this filter.")
+            else:
+                selected_result_range = st.slider('Select Result Range', min_result, max_result, (min_result, max_result))
+                filtered_df = filtered_df[(filtered_df['Result_temp'] >= selected_result_range[0]) & (filtered_df['Result_temp'] <= selected_result_range[1])]
+        
+        # Check if 'Result_temp' column exists before dropping it
+        if 'Result_temp' in filtered_df.columns:
+            filtered_df = filtered_df.drop(columns=['Result_temp'])
 
     # Display the filtered DataFrame
     st.dataframe(filtered_df)
