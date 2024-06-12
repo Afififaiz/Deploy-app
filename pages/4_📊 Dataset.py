@@ -95,10 +95,21 @@ def main():
     hist_fig = px.histogram(data, x='age', nbins=30, title='Age Distribution', labels={'age': 'Age'})
     st.plotly_chart(hist_fig)
 
-    # Box Plot of Serum Cholesterol by Gender
-    st.write("### Serum Cholesterol by Gender")
-    box_fig = px.box(data, x='Gender', y='chol', title='Serum Cholesterol by Gender', labels={'chol': 'Serum Cholesterol'})
-    st.plotly_chart(box_fig)
+    # Correlation Heatmap
+    st.write("### Correlation Heatmap")
+
+    # Manually encode categorical variables for correlation
+    categorical_columns = data.select_dtypes(include=['object']).columns
+    for col in categorical_columns:
+        data[col] = pd.factorize(data[col])[0]
+
+    # Drop the 'Gender' and 'output' columns for correlation heatmap
+    corr_data = data.drop(columns=['Gender', 'output'])
+
+    corr = corr_data.corr()
+    plt.figure(figsize=(15, 8))
+    heatmap = sns.heatmap(corr, annot=True, cmap='coolwarm', center=0)
+    st.pyplot(heatmap.figure)
 
 # Run the interface
 if __name__ == "__main__":
