@@ -100,15 +100,6 @@ def main():
     box_fig = px.box(data, x='Gender', y='chol', title='Serum Cholesterol by Gender', labels={'chol': 'Serum Cholesterol'})
     st.plotly_chart(box_fig)
 
-    # Correlation Heatmap
-    st.write("### Correlation Heatmap")
-    numeric_data = data.select_dtypes(include=['float64', 'int64'])  # Select only numeric columns
-    corr = numeric_data.corr()
-    plt.figure(figsize=(15, 8))
-    heatmap = sns.heatmap(corr, annot=True, cmap='coolwarm', center=0)
-    st.pyplot(plt)
-    
-
 # Run the interface
 if __name__ == "__main__":
     main()
