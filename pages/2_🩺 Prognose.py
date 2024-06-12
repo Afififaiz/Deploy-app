@@ -8,7 +8,7 @@ import pytz
 # Define the interface and functions
 def main():
     # Load the trained XGBoost model
-    xgb_model = joblib.load('C:/Users/Afifi Faiz/Downloads/Cardialyze-deploy/xgb_model.pkl')
+    xgb_model = joblib.load('xgb_model.pkl')
 
     st.title("Cardiac Arrest Risk Prognosticator")
 
