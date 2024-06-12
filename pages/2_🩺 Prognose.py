@@ -30,7 +30,7 @@ def main():
             'num_major_vessels': 0,
             'thalassemia': 'Normal',
             'exercise_angina': 'No',
-            'oldpeak': -2.0,
+            'oldpeak': 0.0,
             'st_slope': 'Upsloping'
         }
 
@@ -56,7 +56,7 @@ def main():
             'num_major_vessels': 0,
             'thalassemia': 'Normal',
             'exercise_angina': 'No',
-            'oldpeak': -2.0,
+            'oldpeak': 0.0,
             'st_slope': 'Upsloping'
         }
         st.session_state['current_result'] = None
@@ -103,7 +103,7 @@ def main():
     st.session_state['inputs']['exercise_angina'] = st.selectbox("Exercise Angina:", options=["Yes", "No"], index=["Yes", "No"].index(st.session_state['inputs']['exercise_angina']))
 
     # Get user input for oldpeak
-    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=-2.0, max_value=3.7, value=st.session_state['inputs']['oldpeak'])
+    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=0.0, max_value=3.7, value=st.session_state['inputs']['oldpeak'])
 
     # Get user input for ST slope
     st.session_state['inputs']['st_slope'] = st.selectbox("ST Slope:", options=["Upsloping", "Flat", "Downsloping"], index=["Upsloping", "Flat", "Downsloping"].index(st.session_state['inputs']['st_slope']))
