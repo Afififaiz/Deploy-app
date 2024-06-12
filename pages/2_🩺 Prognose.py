@@ -8,7 +8,7 @@ import pytz
 # Define the interface and functions
 def main():
     # Load the trained XGBoost model
-    xgb_model = joblib.load('xgb_model.pkl')
+    xgb_model = joblib.load('C:/Users/Afifi Faiz/Downloads/Cardialyze-deploy/xgb_model.pkl')
 
     st.title("Cardiac Arrest Risk Prognosticator")
 
@@ -19,18 +19,18 @@ def main():
         st.session_state['inputs'] = {
             'name': '',
             'ic_number': '',
-            'age': 29,
+            'age': 28,
             'gender': 'Male',
             'chest_pain_type': 'Typical Angina',
-            'resting_blood_pressure': 94,
-            'serum_cholesterol': 126,
+            'resting_blood_pressure': 92,
+            'serum_cholesterol': 85,
             'fasting_blood_sugar': 'Below 120',
             'ecg_result': 'Normal',
-            'max_heart_rate': 71,
+            'max_heart_rate': 67,
             'num_major_vessels': 0,
             'thalassemia': 'Normal',
             'exercise_angina': 'No',
-            'oldpeak': -2.6,
+            'oldpeak': -2.0,
             'st_slope': 'Upsloping'
         }
 
@@ -45,18 +45,18 @@ def main():
         st.session_state['inputs'] = {
             'name': '',
             'ic_number': '',
-            'age': 29,
+            'age': 28,
             'gender': 'Male',
             'chest_pain_type': 'Typical Angina',
-            'resting_blood_pressure': 94,
-            'serum_cholesterol': 126,
+            'resting_blood_pressure': 92,
+            'serum_cholesterol': 85,
             'fasting_blood_sugar': 'Below 120',
             'ecg_result': 'Normal',
-            'max_heart_rate': 71,
+            'max_heart_rate': 67,
             'num_major_vessels': 0,
             'thalassemia': 'Normal',
             'exercise_angina': 'No',
-            'oldpeak': -2.6,
+            'oldpeak': -2.0,
             'st_slope': 'Upsloping'
         }
         st.session_state['current_result'] = None
@@ -68,7 +68,7 @@ def main():
     st.session_state['inputs']['ic_number'] = st.text_input("Identification Number (with '-'):", value=st.session_state['inputs']['ic_number'])
 
     # Get user input for age
-    st.session_state['inputs']['age'] = st.number_input("Age (years):", min_value=29, max_value=77, value=st.session_state['inputs']['age'])
+    st.session_state['inputs']['age'] = st.number_input("Age (years):", min_value=28, max_value=77, value=st.session_state['inputs']['age'])
 
     # Get user input for gender
     st.session_state['inputs']['gender'] = st.selectbox("Gender:", options=["Male", "Female"], index=["Male", "Female"].index(st.session_state['inputs']['gender']))
@@ -78,10 +78,10 @@ def main():
                                    options=["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"], index=["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"].index(st.session_state['inputs']['chest_pain_type']))
 
     # Get user input for resting blood pressure
-    st.session_state['inputs']['resting_blood_pressure'] = st.number_input("Resting Blood Pressure (mm Hg):", min_value=94, max_value=200, value=st.session_state['inputs']['resting_blood_pressure'])
+    st.session_state['inputs']['resting_blood_pressure'] = st.number_input("Resting Blood Pressure (mm Hg):", min_value=92, max_value=170, value=st.session_state['inputs']['resting_blood_pressure'])
 
     # Get user input for serum cholesterol levels
-    st.session_state['inputs']['serum_cholesterol'] = st.number_input("Serum Cholesterol (mg/dl):", min_value=126, max_value=564, value=st.session_state['inputs']['serum_cholesterol'])
+    st.session_state['inputs']['serum_cholesterol'] = st.number_input("Serum Cholesterol (mg/dl):", min_value=85, max_value=394, value=st.session_state['inputs']['serum_cholesterol'])
 
     # Get user input for fasting blood sugar levels
     st.session_state['inputs']['fasting_blood_sugar'] = st.selectbox("Fasting Blood Sugar Level (mg/dl):", options=["Below 120", "Above 120"], index=["Below 120", "Above 120"].index(st.session_state['inputs']['fasting_blood_sugar']))
@@ -91,7 +91,7 @@ def main():
                               options=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"], index=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"].index(st.session_state['inputs']['ecg_result']))
 
     # Get user input for maximum heart rate reached during exercise
-    st.session_state['inputs']['max_heart_rate'] = st.number_input("Maximum Heart Rate (bpm):", min_value=71, max_value=202, value=st.session_state['inputs']['max_heart_rate'])
+    st.session_state['inputs']['max_heart_rate'] = st.number_input("Maximum Heart Rate (bpm):", min_value=67, max_value=202, value=st.session_state['inputs']['max_heart_rate'])
 
     # Get user input for number of major vessels affected
     st.session_state['inputs']['num_major_vessels'] = st.selectbox("Number of Major Vessels Affected:", options=[0, 1, 2, 3], index=st.session_state['inputs']['num_major_vessels'])
@@ -103,7 +103,7 @@ def main():
     st.session_state['inputs']['exercise_angina'] = st.selectbox("Exercise Angina:", options=["Yes", "No"], index=["Yes", "No"].index(st.session_state['inputs']['exercise_angina']))
 
     # Get user input for oldpeak
-    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=-2.6, max_value=6.2, value=st.session_state['inputs']['oldpeak'])
+    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=-2.0, max_value=3.7, value=st.session_state['inputs']['oldpeak'])
 
     # Get user input for ST slope
     st.session_state['inputs']['st_slope'] = st.selectbox("ST Slope:", options=["Upsloping", "Flat", "Downsloping"], index=["Upsloping", "Flat", "Downsloping"].index(st.session_state['inputs']['st_slope']))
