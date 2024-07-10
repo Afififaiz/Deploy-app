@@ -8,7 +8,7 @@ import pytz
 # Define the interface and functions
 def main():
     # Load the trained XGBoost model
-    xgb_model = joblib.load('xgb_model.pkl')
+    xgb_model = joblib.load('xgb_model_latest.pkl')
 
     st.title("Cardiac Arrest Risk Prognosticator")
 
@@ -26,9 +26,7 @@ def main():
             'serum_cholesterol': 85,
             'fasting_blood_sugar': 'Below 120',
             'ecg_result': 'Normal',
-            'max_heart_rate': 67,
-            'num_major_vessels': 0,
-            'thalassemia': 'Normal',
+            'max_heart_rate': 80,
             'exercise_angina': 'No',
             'oldpeak': 0.0,
             'st_slope': 'Upsloping'
@@ -52,9 +50,7 @@ def main():
             'serum_cholesterol': 85,
             'fasting_blood_sugar': 'Below 120',
             'ecg_result': 'Normal',
-            'max_heart_rate': 67,
-            'num_major_vessels': 0,
-            'thalassemia': 'Normal',
+            'max_heart_rate': 80,
             'exercise_angina': 'No',
             'oldpeak': 0.0,
             'st_slope': 'Upsloping'
@@ -91,19 +87,13 @@ def main():
                               options=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"], index=["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"].index(st.session_state['inputs']['ecg_result']))
 
     # Get user input for maximum heart rate reached during exercise
-    st.session_state['inputs']['max_heart_rate'] = st.number_input("Maximum Heart Rate (bpm):", min_value=67, max_value=202, value=st.session_state['inputs']['max_heart_rate'])
-
-    # Get user input for number of major vessels affected
-    st.session_state['inputs']['num_major_vessels'] = st.selectbox("Number of Major Vessels Affected:", options=[0, 1, 2, 3], index=st.session_state['inputs']['num_major_vessels'])
-
-    # Get user input for thalassemia type
-    st.session_state['inputs']['thalassemia'] = st.selectbox("Thalassemia Type:", options=["Normal", "Defect", "Reversible Defect"], index=["Normal", "Defect", "Reversible Defect"].index(st.session_state['inputs']['thalassemia']))
+    st.session_state['inputs']['max_heart_rate'] = st.number_input("Maximum Heart Rate (bpm):", min_value=80, max_value=202, value=st.session_state['inputs']['max_heart_rate'])
 
     # Get user input for exercise angina
     st.session_state['inputs']['exercise_angina'] = st.selectbox("Exercise Angina:", options=["Yes", "No"], index=["Yes", "No"].index(st.session_state['inputs']['exercise_angina']))
 
     # Get user input for oldpeak
-    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=0.0, max_value=3.7, value=st.session_state['inputs']['oldpeak'])
+    st.session_state['inputs']['oldpeak'] = st.number_input("Oldpeak (mm):", min_value=0.0, max_value=3.6, value=st.session_state['inputs']['oldpeak'])
 
     # Get user input for ST slope
     st.session_state['inputs']['st_slope'] = st.selectbox("ST Slope:", options=["Upsloping", "Flat", "Downsloping"], index=["Upsloping", "Flat", "Downsloping"].index(st.session_state['inputs']['st_slope']))
@@ -115,14 +105,13 @@ def main():
         chest_pain_type_num = ["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"].index(st.session_state['inputs']['chest_pain_type'])
         fasting_blood_sugar_num = 1 if st.session_state['inputs']['fasting_blood_sugar'] == "Above 120" else 0
         ecg_result_num = ["Normal", "ST-T Wave Abnormality", "Left Ventricular Hypertrophy"].index(st.session_state['inputs']['ecg_result'])
-        thalassemia_num = ["Normal", "Defect", "Reversible Defect"].index(st.session_state['inputs']['thalassemia'])
         exercise_angina_num = 1 if st.session_state['inputs']['exercise_angina'] == "Yes" else 0
         st_slope_num = ["Upsloping", "Flat", "Downsloping"].index(st.session_state['inputs']['st_slope'])
 
         # Prepare input for prediction
         input_data = np.array([[st.session_state['inputs']['age'], gender_num, chest_pain_type_num, st.session_state['inputs']['resting_blood_pressure'], st.session_state['inputs']['serum_cholesterol'],
-                                fasting_blood_sugar_num, ecg_result_num, st.session_state['inputs']['max_heart_rate'], st.session_state['inputs']['num_major_vessels'],
-                                thalassemia_num, exercise_angina_num, st.session_state['inputs']['oldpeak'], st_slope_num]])
+                                fasting_blood_sugar_num, ecg_result_num, st.session_state['inputs']['max_heart_rate'],
+                                exercise_angina_num, st.session_state['inputs']['oldpeak'], st_slope_num]])
 
         # Predict
         probability = xgb_model.predict_proba(input_data)[0][1]
@@ -140,8 +129,6 @@ def main():
             "Fasting Blood Sugar": st.session_state['inputs']['fasting_blood_sugar'],
             "ECG Result": st.session_state['inputs']['ecg_result'],
             "Max Heart Rate": st.session_state['inputs']['max_heart_rate'],
-            "Major Vessels Affected": st.session_state['inputs']['num_major_vessels'],
-            "Thalassemia": st.session_state['inputs']['thalassemia'],
             "Exercise Angina": st.session_state['inputs']['exercise_angina'],
             "Oldpeak": st.session_state['inputs']['oldpeak'],
             "ST Slope": st.session_state['inputs']['st_slope'],
@@ -171,8 +158,8 @@ def main():
     if st.session_state['current_result'] is not None:
         result_df = pd.DataFrame([st.session_state['current_result']])
         columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 
-                'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
-                'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
+                'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 
+                'Oldpeak', 'ST Slope', 'Result']
         result_df = result_df[columns]
         result_df.index = [''] * len(result_df)  # Remove the index
         st.write("Current Test Result:")
