@@ -9,9 +9,9 @@ if 'history' in st.session_state and st.session_state['history']:
     history_df = pd.DataFrame(st.session_state['history'])
     
     # Rearrange columns to put timestamp first
-    columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 'Serum Cholesterol', 
-               'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 
-               'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result']
+    columns = ['Timestamp', 'Name', 'IC Number', 'Age', 'Gender', 'Chest Pain Type', 'Resting Blood Pressure', 
+               'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Exercise Angina',
+                'Oldpeak', 'ST Slope', 'Result']
     history_df = history_df[columns]
 
     # Set the index to start from 1 and label it as "Test"
@@ -19,7 +19,7 @@ if 'history' in st.session_state and st.session_state['history']:
     history_df.index.name = 'Test'
 
     # Select filter type
-    filter_type = st.selectbox('Select Filter Type', ['None', 'Gender', 'Chest Pain Type', 'Age', 'Resting Blood Pressure', 'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Major Vessels Affected', 'Thalassemia', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result'])
+    filter_type = st.selectbox('Select Filter Type', ['None', 'Gender', 'Chest Pain Type', 'Age', 'Resting Blood Pressure', 'Serum Cholesterol', 'Fasting Blood Sugar', 'ECG Result', 'Max Heart Rate', 'Exercise Angina', 'Oldpeak', 'ST Slope', 'Result'])
 
     # Initialize filtered DataFrame
     filtered_df = history_df.copy()
@@ -69,14 +69,6 @@ if 'history' in st.session_state and st.session_state['history']:
         else:
             selected_hr_range = st.slider('Select Max Heart Rate Range', min_hr, max_hr, (min_hr, max_hr))
             filtered_df = filtered_df[(filtered_df['Max Heart Rate'] >= selected_hr_range[0]) & (filtered_df['Max Heart Rate'] <= selected_hr_range[1])]
-    elif filter_type == 'Major Vessels Affected':
-        unique_vessels = filtered_df['Major Vessels Affected'].unique().tolist()
-        selected_vessels = st.multiselect('Select Major Vessels Affected', unique_vessels, default=unique_vessels)
-        filtered_df = filtered_df[filtered_df['Major Vessels Affected'].isin(selected_vessels)]
-    elif filter_type == 'Thalassemia':
-        unique_thal = filtered_df['Thalassemia'].unique().tolist()
-        selected_thal = st.multiselect('Select Thalassemia', unique_thal, default=unique_thal)
-        filtered_df = filtered_df[filtered_df['Thalassemia'].isin(selected_thal)]
     elif filter_type == 'Exercise Angina':
         unique_angina = filtered_df['Exercise Angina'].unique().tolist()
         selected_angina = st.multiselect('Select Exercise Angina', unique_angina, default=unique_angina)
