@@ -50,7 +50,7 @@ def about_page():
             including age, gender, chest pain type, resting blood pressure, serum cholesterol, fasting blood sugar, 
             resting electrocardiogram results, maximum heart rate, number of major vessels affected, thalassemia type, 
             exercise-induced angina, oldpeak, and ST slope. After thorough training and testing, our model achieved 
-            an accuracy of 83.61%.
+            an accuracy of 83.98%.
         """)
         
     elif section == "Features Considered":
@@ -110,7 +110,7 @@ def about_page():
     elif section == "Contact Us":
         st.header("Contact Us")
         st.write("For more information or any inquiries, please contact us at:")
-        st.image(r"pic.jpg", width=500)
+        st.image(r"C:\Users\Afifi Faiz\Downloads\Cardialyze-deploy\pic.jpg", width=500)
         st.write("""
         - **Developer:** AFIFI FAIZ
         - **Email:** [afififaiz01@gmail.com](mailto:afififaiz01@gmail.com)
