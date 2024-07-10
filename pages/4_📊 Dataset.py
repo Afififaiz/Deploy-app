@@ -32,20 +32,18 @@ def main():
 
      # Map numerical values to labels
     gender_map = {0: 'Male', 1: 'Female'}
-    cp_map = {0: 'Typical Angina', 1: 'Atypical Angina', 2: 'Non-Anginal Pain', 3: 'Asymptomatic'}
+    cp_map = {1: 'Typical Angina', 2: 'Atypical Angina', 3: 'Non-Anginal Pain', 4: 'Asymptomatic'}
     fbs_map = {0: 'Below 120', 1: 'Above 120'}
     restecg_map = {0: 'Normal', 1: 'ST-T Wave Abnormality', 2: 'Left Ventricular Hypertrophy'}
     exang_map = {0: 'No', 1: 'Yes'}
-    slope_map = {0: 'Upsloping', 1: 'Flat', 2: 'Downsloping'}
-    thal_map = {3: 'Normal', 6: 'Fixed Defect', 7: 'Reversible Defect'}
-
+    slope_map = {1: 'Upsloping', 2: 'Flat', 3: 'Downsloping'}
+    
     data['Gender'] = data['sex'].map(gender_map)
     data['cp'] = data['cp'].map(cp_map)
     data['fbs'] = data['fbs'].map(fbs_map)
     data['restecg'] = data['restecg'].map(restecg_map)
     data['exang'] = data['exang'].map(exang_map)
     data['slope'] = data['slope'].map(slope_map)
-    data['thal'] = data['thal'].map(thal_map)
 
     # Filter out 'Gender' from the list of columns
     attribute_options = [col for col in data.columns if col != 'Gender' and data[col].dtype == 'object']
@@ -95,6 +93,11 @@ def main():
     hist_fig = px.histogram(data, x='age', nbins=30, title='Age Distribution', labels={'age': 'Age'})
     st.plotly_chart(hist_fig)
 
+    # Box Plot of Serum Cholesterol by Gender
+    st.write("### Serum Cholesterol by Gender")
+    box_fig = px.box(data, x='Gender', y='chol', title='Serum Cholesterol by Gender', labels={'chol': 'Serum Cholesterol'})
+    st.plotly_chart(box_fig)
+
     # Correlation Heatmap
     st.write("### Correlation Heatmap")
 
@@ -110,6 +113,7 @@ def main():
     plt.figure(figsize=(15, 8))
     heatmap = sns.heatmap(corr, annot=True, cmap='coolwarm', center=0)
     st.pyplot(heatmap.figure)
+
 
 # Run the interface
 if __name__ == "__main__":
