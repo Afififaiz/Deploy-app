@@ -165,6 +165,29 @@ def main():
         st.write("Current Test Result:")
         st.dataframe(result_df)
 
+    # Sidebar feature explanations
+    st.sidebar.title("Criteria Information")
+    feature = st.sidebar.selectbox("Select a criteria to read about:", 
+                                   ["Age", "Gender", "Chest Pain Type", "Resting Blood Pressure", 
+                                    "Serum Cholesterol", "Fasting Blood Sugar", "ECG Result", 
+                                    "Max Heart Rate", "Exercise Angina", "Oldpeak", "ST Slope"])
+
+    feature_explanations = {
+        "Age": "The age of the patient in years. Older age is associated with a higher risk of cardiac issues.",
+        "Gender": "The gender of the patient. Males are generally at a higher risk for heart diseases.",
+        "Chest Pain Type": "The type of chest pain experienced. 'Typical Angina' is a common chest pain associated with heart disease.",
+        "Resting Blood Pressure": "The blood pressure when at rest. Higher values can indicate greater risk of heart problems.",
+        "Serum Cholesterol": "The level of cholesterol in the blood. Higher cholesterol levels can increase heart disease risk.",
+        "Fasting Blood Sugar": "Blood sugar level after fasting. Higher levels can indicate diabetes, which increases heart disease risk.",
+        "ECG Result": "Results from an electrocardiogram test. Abnormal results can indicate heart issues.",
+        "Max Heart Rate": "The highest heart rate reached during physical activity. Lower values can indicate cardiovascular fitness issues.",
+        "Exercise Angina": "Chest pain caused by exercise. It can indicate underlying heart problems.",
+        "Oldpeak": "The difference in the ST segment of an ECG reading during and after exercise. Higher values can indicate heart issues.",
+        "ST Slope": "The slope of the ST segment in an ECG reading. 'Upsloping' is generally considered normal, while 'Flat' or 'Downsloping' can indicate problems."
+    }
+
+    st.sidebar.write(feature_explanations[feature])
+
 
 # Run the interface
 if __name__ == "__main__":
