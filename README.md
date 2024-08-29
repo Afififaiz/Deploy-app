@@ -3,7 +3,7 @@
 -The Tabular data consist of 13 criteria and 1 output (indicate cardiac or not)
 *Data Manipulation used: Replace Missing value (Mode-Category/ Mean-Numerical), Redundant data removed, Transform the category in index number category, Data Normalization
 
-- Balanced the output data using SMOTE Technique, to oversampling the minority class
+-Balanced the output data using SMOTE Technique, to oversampling the minority class
 
 -Utilize XGBooost Library for building the model
 
